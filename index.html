@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>download 32GB RAM</title>
+    <style>
+        body {
+            background-color: #1a1a1a;
+            color: #ffffff;
+            font-family: 'Courier New', Courier, monospace;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        #downloadBtn {
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: inherit;
+            transition: background-color 0.3s;
+        }
+
+        #downloadBtn:hover {
+            background-color: #0056b3;
+        }
+
+        #downloadBtn:disabled {
+            background-color: #555;
+            cursor: not-allowed;
+        }
+
+        /* 進度條容器 */
+        .progress-wrapper {
+            width: 80%;
+            max-width: 400px;
+            margin-top: 30px;
+            display: none; /* 預設隱藏 */
+        }
+
+        .progress-container {
+            width: 100%;
+            background-color: #333;
+            border-radius: 4px;
+            overflow: hidden;
+            height: 30px;
+            border: 1px solid #555;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background-color: #28a745;
+            text-align: center;
+            line-height: 30px;
+            color: white;
+            font-weight: bold;
+            transition: width 0.1s linear;
+        }
+
+        .status-text {
+            margin-top: 10px;
+            text-align: center;
+            color: #ccc;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>download 32GB RAM</h1>
+
+    <button id="downloadBtn">download</button>
+
+    <div class="progress-wrapper" id="progressWrapper">
+        <div class="progress-container">
+            <div class="progress-bar" id="progressBar">0%</div>
+        </div>
+        <div class="status-text" id="statusText">Connecting to server...</div>
+    </div>
+
+    <script>
+        const btn = document.getElementById('downloadBtn');
+        const wrapper = document.getElementById('progressWrapper');
+        const bar = document.getElementById('progressBar');
+        const statusText = document.getElementById('statusText');
+
+        btn.addEventListener('click', function() {
+            // 隱藏按鈕或禁用按鈕
+            btn.disabled = true;
+            
+            // 顯示進度條區域
+            wrapper.style.display = 'block';
+
+            let width = 0;
+            
+            // 模擬下載進度
+            const interval = setInterval(function() {
+                // 隨機增加進度，讓看起來比較真實
+                const increment = Math.random() * 2; 
+                width += increment;
+
+                if (width >= 100) {
+                    width = 100;
+                    clearInterval(interval);
+                    bar.style.width = '100%';
+                    bar.innerText = '100%';
+                    statusText.innerText = 'Download Complete. Please restart your system.';
+                    statusText.style.color = '#28a745';
+                } else {
+                    bar.style.width = width + '%';
+                    bar.innerText = Math.floor(width) + '%';
+                    
+                    // 根據進度改變文字
+                    if(width > 20 && width < 50) {
+                        statusText.innerText = 'Downloading RAM modules...';
+                    } else if (width >= 50 && width < 80) {
+                        statusText.innerText = 'Installing memory blocks...';
+                    } else if (width >= 80) {
+                        statusText.innerText = 'Finalizing configuration...';
+                    }
+                }
+            }, 50); // 每 50 毫秒更新一次
+        });
+    </script>
+</body>
+</html>
